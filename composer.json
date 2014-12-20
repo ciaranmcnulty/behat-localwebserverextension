@@ -16,10 +16,10 @@
     "require" : {
         "php" : "~5.4",
         "behat/behat" : "~3.0",
-        "symfony/process" : "~2.3",
-        "phpspec/phpspec": "~2.1"
+        "symfony/process" : "~2.3"
     },
     "require-dev": {
+        "phpspec/phpspec": "~2.1"
     },
     "config": {
         "bin-dir" : "bin"
