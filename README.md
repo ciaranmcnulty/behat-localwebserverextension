@@ -20,7 +20,20 @@ Add to your `behat.yml`:
 ```yml
 default:
   extensions:
-    Cjm\Behat\LocalWebserverExtension : ~
+    Cjm\Behat\LocalWebserverExtension: ~
+```
+
+Advanced Configuration
+----------------------
+
+Available configuration options:
+
+```yml
+default:
+  extensions:
+    Cjm\Behat\LocalWebserverExtension:
+        host : 192.168.1.1   # defaults to 'localhost'
+        port : 80            # defaults to '8000'
 ```
 
 Limitations
@@ -28,13 +41,14 @@ Limitations
 
 Currently:
 
- * Only works on OSX or BSD
+ * Only works on OSX or BSD (needs testing on Linux)
  * Always uses php internal webserver
- * Only works on localhost:8000
 
 To do:
 
- - [ ] Support linux
- - [ ] Add config for host / port
- - [ ] Integrate with Mink
+ - [x] Support linux
+ - [x] Add config for host / port
+ - [ ] Read host/port settings from MinkExtension
+ - [ ] Only turn webserver on for certain contexts
  - [ ] Support symfony app console
+ - [ ] Support custom commands

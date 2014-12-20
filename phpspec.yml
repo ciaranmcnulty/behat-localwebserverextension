@@ -1,0 +1,4 @@
+suites:
+    default:
+        namespace: Cjm\Behat\LocalWebserverExtension
+        psr4_prefix: Cjm\Behat\LocalWebserverExtension

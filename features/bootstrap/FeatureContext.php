@@ -19,7 +19,7 @@ class FeatureContext implements SnippetAcceptingContext
      */
     public function myContextConnectsToTheLocalWebserver()
     {
-        $this->content = file_get_contents('http://localhost:8000');
+        $this->content = file_get_contents('http://localhost:8888');
     }
 
     /**

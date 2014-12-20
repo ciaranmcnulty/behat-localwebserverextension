@@ -1,3 +1,5 @@
 default:
   extensions:
-    Cjm\Behat\LocalWebserverExtension : ~
+    Cjm\Behat\LocalWebserverExtension:
+      host: localhost
+      port: 8888

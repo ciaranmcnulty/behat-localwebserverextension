@@ -54,6 +54,16 @@ final class LocalWebserverExtension implements Extension
      */
     public function configure(ArrayNodeDefinition $builder)
     {
+        $builder
+            ->children()
+                ->scalarNode('host')
+                    ->defaultNull()
+                ->end()
+                ->integerNode('port')
+                    ->defaultNull()
+                ->end()
+            ->end()
+        ->end();
     }
 
     /**
@@ -66,5 +76,8 @@ final class LocalWebserverExtension implements Extension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
         $loader->load('services.xml');
+
+        $container->setParameter('cjm.local_webserver.configuration.host', $config['host']);
+        $container->setParameter('cjm.local_webserver.configuration.port', $config['port']);
     }
 }

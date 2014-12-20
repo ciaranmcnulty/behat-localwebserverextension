@@ -9,7 +9,13 @@
             <tag name="event_dispatcher.subscriber" />
         </service>
 
-        <service id="cjm.local_webserver.webserver_controller.built_in" class="Cjm\Behat\LocalWebserverExtension\Webserver\BuiltInWebserverController" />
+        <service id="cjm.local_webserver.webserver_controller.built_in" class="Cjm\Behat\LocalWebserverExtension\Webserver\BuiltInWebserverController">
+            <argument type="service" id="cjm.local_webserver.configuration" />
+        </service>
 
+        <service id="cjm.local_webserver.configuration" class="Cjm\Behat\LocalWebserverExtension\Webserver\Configuration">
+            <argument>%cjm.local_webserver.configuration.host%</argument>
+            <argument>%cjm.local_webserver.configuration.port%</argument>
+        </service>
     </services>
 </container>

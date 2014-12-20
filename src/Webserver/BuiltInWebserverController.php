@@ -12,6 +12,16 @@ final class BuiltInWebserverController implements WebserverController
      */
     private $process;
 
+    /**
+     * @var Configuration
+     */
+    private $config;
+
+    public function __construct(Configuration $config)
+    {
+        $this->config = $config;
+    }
+
     public function startServer()
     {
         $command = $this->getCommand();
@@ -54,13 +64,14 @@ final class BuiltInWebserverController implements WebserverController
     private function getCommand()
     {
         $manScript = @`man script`;
+        $command = sprintf("php -S %s:%d", $this->config->getHost(), $this->config->getPort());
 
         if (strpos($manScript, 'BSD General Commands Manual ')) {
-            return 'script -q /dev/stdout php -S localhost:8000';
+            return 'script -q /dev/stdout '.$command;
         }
 
         if (strpos($manScript, 'User Commands ')) {
-            return 'script -c ' . escapeshellarg(' php -S localhost:8000') . '/dev/stdout';
+            return 'script -c ' . escapeshellarg($command) . '/dev/stdout';
         }
 
         throw new \RuntimeException('Unable to start server on this platform (Supported: OSX/BSD/GNU)');
