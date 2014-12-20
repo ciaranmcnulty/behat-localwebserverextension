@@ -1,4 +1,18 @@
 {
+    "name": "ciaranmcnulty/behat-localwebserverextension",
+    "type": "library",
+    "description": "Extension for behat users who forget to start their webserver",
+    "keywords": ["tdd","bdd","behat"],
+    "homepage": "http://github.com/ciaranmcnulty/behat-localwebserverextension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ciaran McNulty",
+            "email": "mail@ciaranmcnulty.com",
+            "homepage": "http://ciaranmcnulty.com",
+            "role": "Developer"
+        }
+    ],
     "require" : {
         "php" : "~5.4",
         "behat/behat" : "~3.0",

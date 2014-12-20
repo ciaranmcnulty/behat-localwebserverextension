@@ -3,6 +3,15 @@ Behat Local Webserver Extension
 
 A trivial extension for people who forget to start their webserver
 
+Installation
+------------
+
+Require in composer
+
+```
+composer require ciaranmcnulty/behat-localwebserverextension
+```
+
 Usage
 -----
 
