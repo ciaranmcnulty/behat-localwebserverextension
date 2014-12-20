@@ -1,8 +1,17 @@
 {
     "require" : {
-        "behat/behat" : "~3.0"
+        "php" : "~5.4",
+        "behat/behat" : "~3.0",
+        "symfony/process" : "~2.3"
+    },
+    "require-dev": {
     },
     "config": {
         "bin-dir" : "bin"
+    },
+    "autoload": {
+        "psr-4" : {
+            "Cjm\\Behat\\LocalWebserverExtension\\" : "src"
+        }
     }
 }
