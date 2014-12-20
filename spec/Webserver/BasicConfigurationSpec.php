@@ -2,22 +2,30 @@
 
 namespace spec\Cjm\Behat\LocalWebserverExtension\Webserver;
 
-use Cjm\Behat\LocalWebserverExtension\Webserver\Configuration;
+use Cjm\Behat\LocalWebserverExtension\Webserver\BasicConfiguration;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class ConfigurationSpec extends ObjectBehavior
+class BasicConfigurationSpec extends ObjectBehavior
 {
-    function it_defaults_the_port()
+    function let()
     {
         $this->beConstructedWith(null, null);
-        $this->getPort()->shouldReturn(Configuration::DEFAULT_PORT);
+    }
+
+    function it_is_a_webserver_configuration()
+    {
+        $this->shouldHaveType('Cjm\Behat\LocalWebserverExtension\Webserver\Configuration');
+    }
+
+    function it_defaults_the_port()
+    {
+        $this->getPort()->shouldReturn(BasicConfiguration::DEFAULT_PORT);
     }
 
     function it_defaults_the_host()
     {
-        $this->beConstructedWith(null, null);
-        $this->getHost()->shouldReturn(Configuration::DEFAULT_HOST);
+        $this->getHost()->shouldReturn(BasicConfiguration::DEFAULT_HOST);
     }
 
     function it_uses_the_host_it_is_constructed_with()

@@ -2,4 +2,18 @@ default:
   extensions:
     Cjm\Behat\LocalWebserverExtension:
       host: localhost
-      port: 8888
+      port: 8080
+
+mink:
+  suites:
+    mink:
+      contexts: [ MinkContext ]
+  extensions:
+    Behat\MinkExtension:
+      base_url:  'http://localhost:8081'
+      sessions:
+        default:
+          goutte: ~
+    Cjm\Behat\LocalWebserverExtension:
+      host: ~
+      port: ~

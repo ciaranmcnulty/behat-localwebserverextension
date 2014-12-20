@@ -6,6 +6,7 @@ use Behat\Testwork\EventDispatcher\ServiceContainer\EventDispatcherExtension;
 use Behat\Testwork\ServiceContainer\Extension;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
@@ -22,6 +23,19 @@ final class LocalWebserverExtension implements Extension
      */
     public function process(ContainerBuilder $container)
     {
+        if ($container->hasParameter('mink.base_url')) {
+            $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\MinkConfiguration', array(
+                '%cjm.local_webserver.configuration.host%',
+                '%cjm.local_webserver.configuration.port%',
+                '%mink.base_url%'
+            ));
+            $container->setDefinition('cjm.local_webserver.configuration.mink', $definition);
+
+            $container->setAlias('cjm.local_webserver.configuration', new Alias('cjm.local_webserver.configuration.mink'));
+        }
+        else {
+            $container->setAlias('cjm.local_webserver.configuration', new Alias('cjm.local_webserver.configuration.basic'));
+        }
     }
 
     /**
@@ -60,7 +74,7 @@ final class LocalWebserverExtension implements Extension
                 ->scalarNode('host')
                     ->defaultNull()
                 ->end()
-                ->integerNode('port')
+                ->scalarNode('port')
                     ->defaultNull()
                 ->end()
             ->end()
@@ -75,6 +89,9 @@ final class LocalWebserverExtension implements Extension
      */
     public function load(ContainerBuilder $container, array $config)
     {
+        $container->setParameter('cjm.local_webserver.configuration.host', $config['host']);
+        $container->setParameter('cjm.local_webserver.configuration.port', $config['port']);
+
         $this->loadEventSubscribers($container);
         $this->loadWebserverController($container);
         $this->loadWebserverConfiguration($container, $config);
@@ -97,15 +114,12 @@ final class LocalWebserverExtension implements Extension
         $container->setDefinition('cjm.local_webserver.webserver_controller.built_in', $definition);
     }
 
-    private function loadWebserverConfiguration(ContainerBuilder $container, array $config)
+    private function loadWebserverConfiguration(ContainerBuilder $container)
     {
-        $container->setParameter('cjm.local_webserver.configuration.host', $config['host']);
-        $container->setParameter('cjm.local_webserver.configuration.port', $config['port']);
-
-        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\Configuration', array(
+        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\BasicConfiguration', array(
             '%cjm.local_webserver.configuration.host%',
             '%cjm.local_webserver.configuration.port%'
         ));
-        $container->setDefinition('cjm.local_webserver.configuration', $definition);
+        $container->setDefinition('cjm.local_webserver.configuration.basic', $definition);
     }
 }

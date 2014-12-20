@@ -36,6 +36,23 @@ default:
         port : 80            # defaults to '8000'
 ```
 
+Usage with MinkExtension
+------------------------
+
+When MinkExtension is used, host and port will be read from Mink's `base_url` setting *unless* `host` or `port` are
+overridden in the configuration
+
+```yml
+default:
+  extensions:
+    Behat\MinkExtension:
+      base_url:  'http://dev.local:9001'
+      sessions:
+        default:
+          goutte: ~
+    Cjm\Behat\LocalWebserverExtension: ~
+```
+
 Limitations
 -----------
 
@@ -48,7 +65,7 @@ To do:
 
  - [x] Support linux
  - [x] Add config for host / port
- - [ ] Read host/port settings from MinkExtension
+ - [x] Read host/port settings from MinkExtension
  - [ ] Only turn webserver on for certain contexts
  - [ ] Support symfony app console
  - [ ] Support custom commands

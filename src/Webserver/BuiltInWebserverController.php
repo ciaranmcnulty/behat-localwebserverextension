@@ -2,7 +2,6 @@
 
 namespace Cjm\Behat\LocalWebserverExtension\Webserver;
 
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Process\Process;
 
 final class BuiltInWebserverController implements WebserverController
@@ -13,7 +12,7 @@ final class BuiltInWebserverController implements WebserverController
     private $process;
 
     /**
-     * @var Configuration
+     * @var BasicConfiguration
      */
     private $config;
 
@@ -25,6 +24,7 @@ final class BuiltInWebserverController implements WebserverController
     public function startServer()
     {
         $command = $this->getCommand();
+
         $this->process = new Process($command);
         $this->process->setWorkingDirectory(__DIR__ . '/../../web/');
         $this->process->start();

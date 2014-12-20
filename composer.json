@@ -19,7 +19,9 @@
         "symfony/process" : "~2.3"
     },
     "require-dev": {
-        "phpspec/phpspec": "~2.1"
+        "phpspec/phpspec": "~2.1",
+        "behat/mink-extension": "~2.0",
+        "behat/mink-goutte-driver": "~1.0"
     },
     "config": {
         "bin-dir" : "bin"
