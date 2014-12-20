@@ -2,12 +2,13 @@
 
 namespace Cjm\Behat\LocalWebserverExtension\ServiceContainer;
 
+use Behat\Testwork\EventDispatcher\ServiceContainer\EventDispatcherExtension;
 use Behat\Testwork\ServiceContainer\Extension;
 use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 final class LocalWebserverExtension implements Extension
 {
@@ -74,10 +75,37 @@ final class LocalWebserverExtension implements Extension
      */
     public function load(ContainerBuilder $container, array $config)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
-        $loader->load('services.xml');
+        $this->loadEventSubscribers($container);
+        $this->loadWebserverController($container);
+        $this->loadWebserverConfiguration($container, $config);
+    }
 
+    private function loadEventSubscribers(ContainerBuilder $container)
+    {
+        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\EventDispatcher\SuiteSubscriber', array(
+            new Reference('cjm.local_webserver.webserver_controller.built_in')
+        ));
+        $definition->addTag(EventDispatcherExtension::SUBSCRIBER_TAG);
+        $container->setDefinition('cjm.local_webserver.suite_listener', $definition);
+    }
+
+    private function loadWebserverController(ContainerBuilder $container)
+    {
+        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\BuiltInWebserverController', array(
+            new Reference('cjm.local_webserver.configuration')
+        ));
+        $container->setDefinition('cjm.local_webserver.webserver_controller.built_in', $definition);
+    }
+
+    private function loadWebserverConfiguration(ContainerBuilder $container, array $config)
+    {
         $container->setParameter('cjm.local_webserver.configuration.host', $config['host']);
         $container->setParameter('cjm.local_webserver.configuration.port', $config['port']);
+
+        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\Configuration', array(
+            '%cjm.local_webserver.configuration.host%',
+            '%cjm.local_webserver.configuration.port%'
+        ));
+        $container->setDefinition('cjm.local_webserver.configuration', $definition);
     }
 }
