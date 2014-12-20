@@ -53,10 +53,16 @@ final class BuiltInWebserverController implements WebserverController
      */
     private function getCommand()
     {
-        if (strpos(`man script`, 'BSD General Commands Manual ')) {
+        $manScript = @`man script`;
+
+        if (strpos($manScript, 'BSD General Commands Manual ')) {
             return 'script -q /dev/stdout php -S localhost:8000';
         }
 
-        throw new \RuntimeException('Unable to start server on this platform (Supported: OSX/BSD)');
+        if (strpos($manScript, 'User Commands ')) {
+            return 'script -c ' . escapeshellarg(' php -S localhost:8000') . '/dev/stdout';
+        }
+
+        throw new \RuntimeException('Unable to start server on this platform (Supported: OSX/BSD/GNU)');
     }
 }
