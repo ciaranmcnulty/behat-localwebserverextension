@@ -27,7 +27,6 @@ final class BuiltInWebserverController implements WebserverController
         $command = $this->getCommand();
 
         $this->process = new Process($command);
-        $this->process->setWorkingDirectory($this->config->getDocroot());
         $this->process->start();
 
         $start = microtime(true);
@@ -65,6 +64,11 @@ final class BuiltInWebserverController implements WebserverController
     private function getCommand()
     {
         $phpFinder = new PhpExecutableFinder();
-        return sprintf($phpFinder->find() . ' -S %s:%d', $this->config->getHost(), $this->config->getPort());
+        return sprintf(
+             '%s -S %s -t %s',
+             escapeshellcmd($phpFinder->find()),
+             escapeshellarg($this->config->getHost() . ':' . $this->config->getPort()),
+             escapeshellarg($this->config->getDocroot())
+        );
     }
 }
