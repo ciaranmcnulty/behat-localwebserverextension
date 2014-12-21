@@ -35,19 +35,19 @@ final class BuiltInWebserverController implements WebserverController
                 sleep(0.1);
                 continue;
             }
-            throw new \RuntimeException('Webserver did not start within 5 seconds');
+            throw new \RuntimeException('Webserver did not start within 5 seconds: '. $this->process->getErrorOutput());
         }
 
     }
 
     public function isStarted()
     {
-        if(!$this->process->isStarted() || !$this->process->getOutput()) {
+        if(!$this->process->isStarted()) {
             return false;
         }
 
-        if (!strpos($output = $this->process->getOutput(), 'started')) {
-            throw new \RuntimeException("Problem starting webserver:\n$output");
+        if(!@fsockopen($this->config->getHost(), $this->config->getPort())) {
+            return false;
         }
 
         return true;
@@ -63,17 +63,6 @@ final class BuiltInWebserverController implements WebserverController
      */
     private function getCommand()
     {
-        $manScript = @`man script`;
-        $command = sprintf("php -S %s:%d", $this->config->getHost(), $this->config->getPort());
-
-        if (strpos($manScript, 'BSD General Commands Manual ')) {
-            return 'script -q /dev/stdout '.$command;
-        }
-
-        if (strpos($manScript, 'User Commands ')) {
-            return 'script -c ' . escapeshellarg($command) . '/dev/stdout';
-        }
-
-        throw new \RuntimeException('Unable to start server on this platform (Supported: OSX/BSD/GNU)');
+        return sprintf("php -S %s:%d", $this->config->getHost(), $this->config->getPort());
     }
 }
