@@ -3,6 +3,8 @@ Behat Local Webserver Extension
 
 A trivial extension for people who forget to start their webserver
 
+[![Build Status](https://travis-ci.org/ciaranmcnulty/behat-localwebserverextension.svg?branch=master)](https://travis-ci.org/ciaranmcnulty/behat-localwebserverextension)
+
 Installation
 ------------
 
