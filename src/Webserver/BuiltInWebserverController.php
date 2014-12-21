@@ -2,6 +2,7 @@
 
 namespace Cjm\Behat\LocalWebserverExtension\Webserver;
 
+use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
 final class BuiltInWebserverController implements WebserverController
@@ -63,6 +64,7 @@ final class BuiltInWebserverController implements WebserverController
      */
     private function getCommand()
     {
-        return sprintf("php -S %s:%d", $this->config->getHost(), $this->config->getPort());
+        $phpFinder = new PhpExecutableFinder();
+        return sprintf($phpFinder->find() . ' -S %s:%d', $this->config->getHost(), $this->config->getPort());
     }
 }
