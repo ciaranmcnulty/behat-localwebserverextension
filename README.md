@@ -25,6 +25,8 @@ default:
     Cjm\Behat\LocalWebserverExtension: ~
 ```
 
+Run your suite, and your web examples should pass - the internal PHP webserver is started at suite start and exited at suite end.
+
 Advanced Configuration
 ----------------------
 
@@ -42,8 +44,8 @@ default:
 Usage with MinkExtension
 ------------------------
 
-When MinkExtension is used, host and port will be read from Mink's `base_url` setting *unless* `host` or `port` are
-overridden in the configuration
+When MinkExtension is used, host and port will be read from Mink's `base_url` setting so long as `host` or `port` are
+not overridden in the configuration
 
 ```yml
 default:
@@ -61,7 +63,6 @@ Limitations
 
 To do:
 
- - [ ] Catch errors in CLI better
  - [ ] Only turn webserver on for certain contexts
  - [ ] Support symfony app console
  - [ ] Support custom server startup / stop commands
