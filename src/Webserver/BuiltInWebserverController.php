@@ -4,6 +4,7 @@ namespace Cjm\Behat\LocalWebserverExtension\Webserver;
 
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Yaml\Exception\RuntimeException;
 
 final class BuiltInWebserverController implements WebserverController
 {
@@ -24,33 +25,17 @@ final class BuiltInWebserverController implements WebserverController
 
     public function startServer()
     {
-        $command = $this->getCommand();
-
-        $this->process = new Process($command);
-        $this->process->start();
-
-        $start = microtime(true);
-        while (!$this->isStarted()) {
-            if ((microtime(true) - $start) < 5) {
-                sleep(0.1);
-                continue;
-            }
-            throw new \RuntimeException('Webserver did not start within 5 seconds: '. $this->process->getErrorOutput());
+        if ($this->portIsAcceptingConnections()) {
+            throw new RuntimeException('Another webserver is already running on port '.$this->config->getPort());
         }
 
+        $this->startServerProcess();
+        $this->waitForServerToSTart();
     }
 
     public function isStarted()
     {
-        if(!$this->process->isStarted()) {
-            return false;
-        }
-
-        if(!@fsockopen($this->config->getHost(), $this->config->getPort())) {
-            return false;
-        }
-
-        return true;
+        return $this->process->isStarted() && $this->portIsAcceptingConnections();
     }
 
     public function stopServer()
@@ -70,5 +55,33 @@ final class BuiltInWebserverController implements WebserverController
              escapeshellarg($this->config->getHost() . ':' . $this->config->getPort()),
              escapeshellarg($this->config->getDocroot())
         );
+    }
+
+    /**
+     * @return resource
+     */
+    private function portIsAcceptingConnections()
+    {
+        return @fsockopen($this->config->getHost(), $this->config->getPort());
+    }
+
+    private function waitForServerToSTart()
+    {
+        $timeout = microtime(true) + 5;
+        while (!$this->isStarted()) {
+            if (microtime(true) < $timeout) {
+                sleep(0.1);
+                continue;
+            }
+            throw new \RuntimeException('Webserver did not start within 5 seconds: ' . $this->process->getErrorOutput());
+        }
+    }
+
+    private function startServerProcess()
+    {
+        $command = $this->getCommand();
+
+        $this->process = new Process($command);
+        $this->process->start();
     }
 }
