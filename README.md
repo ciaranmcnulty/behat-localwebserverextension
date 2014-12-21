@@ -57,6 +57,10 @@ default:
 Limitations
 -----------
 
+Known issues:
+
+ * Currently on some distributions, the webserver continues running after execution
+
 To do:
 
  - [ ] Only turn webserver on for certain contexts
