@@ -11,7 +11,7 @@ Installation
 Require in composer
 
 ```
-composer require ciaranmcnulty/behat-localwebserverextension
+composer require ciaranmcnulty/behat-localwebserverextension --dev
 ```
 
 Usage
