@@ -57,12 +57,9 @@ default:
 Limitations
 -----------
 
-Known issues:
-
- * Currently on some distributions, the webserver continues running after execution
-
 To do:
 
+ - [ ] Catch errors in CLI better
  - [ ] Only turn webserver on for certain contexts
  - [ ] Support symfony app console
  - [ ] Support custom server startup / stop commands
