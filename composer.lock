@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "69ec0f385a73eb1cb37154eb4ffdc36a",
+    "hash": "3db774dd6c2d57935fb7d82b4b76717f",
     "packages": [
         {
             "name": "behat/behat",
@@ -879,7 +879,7 @@
         },
         {
             "name": "ciaranmcnulty/phpspec-typehintedmethods",
-            "version": "dev-master",
+            "version": "1.01",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ciaranmcnulty/phpspec-typehintedmethods.git",
@@ -1634,9 +1634,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "ciaranmcnulty/phpspec-typehintedmethods": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
