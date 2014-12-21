@@ -27,14 +27,15 @@ final class LocalWebserverExtension implements Extension
             $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\MinkConfiguration', array(
                 '%cjm.local_webserver.configuration.host%',
                 '%cjm.local_webserver.configuration.port%',
+                '%cjm.local_webserver.configuration.docroot%',
                 '%mink.base_url%'
             ));
             $container->setDefinition('cjm.local_webserver.configuration.mink', $definition);
 
-            $container->setAlias('cjm.local_webserver.configuration', new Alias('cjm.local_webserver.configuration.mink'));
+            $container->setAlias('cjm.local_webserver.configuration.inner', new Alias('cjm.local_webserver.configuration.mink'));
         }
         else {
-            $container->setAlias('cjm.local_webserver.configuration', new Alias('cjm.local_webserver.configuration.basic'));
+            $container->setAlias('cjm.local_webserver.configuration.inner', new Alias('cjm.local_webserver.configuration.basic'));
         }
     }
 
@@ -77,6 +78,9 @@ final class LocalWebserverExtension implements Extension
                 ->scalarNode('port')
                     ->defaultNull()
                 ->end()
+                ->scalarNode('docroot')
+                    ->defaultNull()
+                ->end()
             ->end()
         ->end();
     }
@@ -91,6 +95,7 @@ final class LocalWebserverExtension implements Extension
     {
         $container->setParameter('cjm.local_webserver.configuration.host', $config['host']);
         $container->setParameter('cjm.local_webserver.configuration.port', $config['port']);
+        $container->setParameter('cjm.local_webserver.configuration.docroot', $config['docroot']);
 
         $this->loadEventSubscribers($container);
         $this->loadWebserverController($container);
@@ -118,8 +123,15 @@ final class LocalWebserverExtension implements Extension
     {
         $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\BasicConfiguration', array(
             '%cjm.local_webserver.configuration.host%',
-            '%cjm.local_webserver.configuration.port%'
+            '%cjm.local_webserver.configuration.port%',
+            '%cjm.local_webserver.configuration.docroot%'
         ));
         $container->setDefinition('cjm.local_webserver.configuration.basic', $definition);
+
+        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\DefaultConfiguration', array(
+            new Reference('cjm.local_webserver.configuration.inner'),
+            '%paths.base%'
+        ));
+        $container->setDefinition('cjm.local_webserver.configuration', $definition);
     }
 }

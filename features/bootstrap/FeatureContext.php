@@ -15,7 +15,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      */
     public function myContextConnectsToTheLocalWebserver()
     {
-        $this->content = file_get_contents('http://localhost:8080');
+        $this->content = @file_get_contents('http://localhost:8080');
     }
 
     /**
@@ -24,7 +24,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
     public function iShouldReceiveSomeContent()
     {
         if (!$this->content) {
-            throw new Exception('Received no response from local server');
+            throw new Exception('Received no response from http://localhost:8080');
         }
     }
 }

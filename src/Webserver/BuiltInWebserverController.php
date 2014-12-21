@@ -26,7 +26,7 @@ final class BuiltInWebserverController implements WebserverController
         $command = $this->getCommand();
 
         $this->process = new Process($command);
-        $this->process->setWorkingDirectory(__DIR__ . '/../../web/');
+        $this->process->setWorkingDirectory($this->config->getDocroot());
         $this->process->start();
 
         $start = microtime(true);

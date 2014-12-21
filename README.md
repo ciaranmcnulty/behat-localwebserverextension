@@ -34,6 +34,7 @@ default:
     Cjm\Behat\LocalWebserverExtension:
         host : 192.168.1.1   # defaults to 'localhost'
         port : 80            # defaults to '8000'
+        docroot: /wwroot     # defaults to '%paths.base%/web'
 ```
 
 Usage with MinkExtension
@@ -56,16 +57,8 @@ default:
 Limitations
 -----------
 
-Currently:
-
- * Only works on OSX or BSD (needs testing on Linux)
- * Always uses php internal webserver
-
 To do:
 
- - [x] Support linux
- - [x] Add config for host / port
- - [x] Read host/port settings from MinkExtension
  - [ ] Only turn webserver on for certain contexts
  - [ ] Support symfony app console
- - [ ] Support custom commands
+ - [ ] Support custom server startup / stop commands

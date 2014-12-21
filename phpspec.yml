@@ -2,3 +2,5 @@ suites:
     default:
         namespace: Cjm\Behat\LocalWebserverExtension
         psr4_prefix: Cjm\Behat\LocalWebserverExtension
+extensions:
+  - Cjm\PhpSpec\Extension\TypeHintedMethodsExtension

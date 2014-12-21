@@ -19,6 +19,7 @@
         "symfony/process" : "~2.3"
     },
     "require-dev": {
+        "ciaranmcnulty/phpspec-typehintedmethods" : "dev-master",
         "phpspec/phpspec": "~2.1",
         "behat/mink-extension": "~2.0",
         "behat/mink-goutte-driver": "~1.0"

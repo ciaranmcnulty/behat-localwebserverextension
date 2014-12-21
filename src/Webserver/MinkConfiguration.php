@@ -2,7 +2,7 @@
 
 namespace Cjm\Behat\LocalWebserverExtension\Webserver;
 
-class MinkConfiguration implements Configuration
+final class MinkConfiguration implements Configuration
 {
     /**
      * @var
@@ -16,11 +16,16 @@ class MinkConfiguration implements Configuration
      * @var
      */
     private $baseUrl;
+    /**
+     * @var
+     */
+    private $docroot;
 
-    public function __construct($host, $port, $baseUrl)
+    public function __construct($host, $port, $docroot, $baseUrl)
     {
         $this->host = $host;
         $this->port = $port;
+        $this->docroot = $docroot;
         $this->baseUrl = $baseUrl;
     }
 
@@ -32,5 +37,10 @@ class MinkConfiguration implements Configuration
     public function getHost()
     {
         return $this->host ?: parse_url($this->baseUrl, PHP_URL_HOST);
+    }
+
+    public function getDocroot()
+    {
+        return $this->docroot;
     }
 }

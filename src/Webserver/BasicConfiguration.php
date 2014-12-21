@@ -4,25 +4,29 @@ namespace Cjm\Behat\LocalWebserverExtension\Webserver;
 
 final class BasicConfiguration implements Configuration
 {
-    const DEFAULT_PORT = 8000;
-    const DEFAULT_HOST = 'localhost';
-
     private $host;
     private $port;
+    private $docroot;
 
-    public function __construct($host, $port)
+    public function __construct($host, $port, $docroot)
     {
         $this->host = $host;
         $this->port = $port;
+        $this->docroot = $docroot;
     }
 
     public function getPort()
     {
-        return $this->port ?: self::DEFAULT_PORT;
+        return $this->port;
     }
 
     public function getHost()
     {
-        return $this->host ?: self::DEFAULT_HOST;
+        return $this->host;
+    }
+
+    public function getDocroot()
+    {
+        return $this->docroot;
     }
 }
