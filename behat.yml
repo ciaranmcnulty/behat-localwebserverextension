@@ -3,7 +3,7 @@ default:
     Cjm\Behat\LocalWebserverExtension:
       host: localhost
       port: 8080
-      docroot: %paths.base%/web
+      docroot: %paths.base%/features/bootstrap/web
 
 mink:
   suites:
