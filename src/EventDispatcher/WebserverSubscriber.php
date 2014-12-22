@@ -2,7 +2,8 @@
 
 namespace Cjm\Behat\LocalWebserverExtension\EventDispatcher;
 
-use Behat\Testwork\EventDispatcher\Event\SuiteTested;
+use Behat\Behat\EventDispatcher\Event\StepTested;
+use Behat\Testwork\EventDispatcher\Event\ExerciseCompleted;
 use Cjm\Behat\LocalWebserverExtension\Webserver\WebserverController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -13,6 +14,8 @@ final class WebserverSubscriber implements EventSubscriberInterface
      * @var WebserverController
      */
     private $webserverController;
+
+    private $isStarted = false;
 
     /**
      * @param WebserverController $webserverController
@@ -28,18 +31,24 @@ final class WebserverSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            SuiteTested::BEFORE => 'startWebserver',
-            SuiteTested::AFTER => 'stopWebserver'
+            StepTested::BEFORE => 'startWebserver',
+            ExerciseCompleted::BEFORE_TEARDOWN => 'stopWebserver'
         ];
     }
 
-    public function startWebserver()
+    public function startWebserver(Foo $foo)
     {
-        $this->webserverController->startServer();
+
+        if (!$this->isStarted) {
+            $this->webserverController->startServer();
+            $this->isStarted = true;
+        }
     }
 
     public function stopWebserver()
     {
-        $this->webserverController->stopServer();
+        if ($this->isStarted) {
+            $this->webserverController->stopServer();
+        }
     }
 }
