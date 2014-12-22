@@ -104,7 +104,7 @@ final class LocalWebserverExtension implements Extension
 
     private function loadEventSubscribers(ContainerBuilder $container)
     {
-        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\EventDispatcher\SuiteSubscriber', array(
+        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\EventDispatcher\WebserverSubscriber', array(
             new Reference('cjm.local_webserver.webserver_controller.built_in')
         ));
         $definition->addTag(EventDispatcherExtension::SUBSCRIBER_TAG);

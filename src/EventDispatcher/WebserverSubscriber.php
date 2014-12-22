@@ -6,7 +6,7 @@ use Behat\Testwork\EventDispatcher\Event\SuiteTested;
 use Cjm\Behat\LocalWebserverExtension\Webserver\WebserverController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class SuiteSubscriber implements EventSubscriberInterface
+final class WebserverSubscriber implements EventSubscriberInterface
 {
 
     /**
