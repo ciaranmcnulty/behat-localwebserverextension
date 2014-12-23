@@ -2,8 +2,11 @@
 
 namespace Cjm\Behat\LocalWebserverExtension\EventDispatcher;
 
-use Behat\Behat\EventDispatcher\Event\StepTested;
+use Behat\Behat\EventDispatcher\Event\BeforeStepTested;
+use Behat\Testwork\EventDispatcher\Event\BeforeSuiteTested;
 use Behat\Testwork\EventDispatcher\Event\ExerciseCompleted;
+use Behat\Testwork\EventDispatcher\Event\SuiteTested;
+use Cjm\Behat\LocalWebserverExtension\Suite\SuiteIdentifier;
 use Cjm\Behat\LocalWebserverExtension\Webserver\WebserverController;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -17,12 +20,10 @@ final class WebserverSubscriber implements EventSubscriberInterface
 
     private $isStarted = false;
 
-    /**
-     * @param WebserverController $webserverController
-     */
-    public function __construct(WebserverController $webserverController)
+    public function __construct(WebserverController $webserverController, SuiteIdentifier $suiteIdentifier)
     {
         $this->webserverController = $webserverController;
+        $this->suiteIdentifier = $suiteIdentifier;
     }
 
     /**
@@ -31,15 +32,16 @@ final class WebserverSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            StepTested::BEFORE => 'startWebserver',
+            SuiteTested::BEFORE => 'startWebserver',
             ExerciseCompleted::BEFORE_TEARDOWN => 'stopWebserver'
         ];
     }
 
-    public function startWebserver(Foo $foo)
+    public function startWebserver(BeforeSuiteTested $suiteEvent)
     {
+        $suite = $suiteEvent->getSuite();
 
-        if (!$this->isStarted) {
+        if ($this->suiteIdentifier->suiteNeedsWebserver($suite) && !$this->isStarted) {
             $this->webserverController->startServer();
             $this->isStarted = true;
         }

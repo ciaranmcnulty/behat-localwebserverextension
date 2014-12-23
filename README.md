@@ -39,13 +39,14 @@ default:
         host : 192.168.1.1   # defaults to 'localhost'
         port : 80            # defaults to '8000'
         docroot: /wwroot     # defaults to '%paths.base%/web'
+        suites: [ web, ui ]  # defaults to (all suites)
 ```
 
 Usage with MinkExtension
 ------------------------
 
-When MinkExtension is used, host and port will be read from Mink's `base_url` setting so long as `host` or `port` are
-not overridden in the configuration
+When MinkExtension is used, default host and port will be read from Mink's `base_url` setting , but you can still override
+if required.
 
 ```yml
 default:

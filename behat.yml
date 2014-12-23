@@ -16,5 +16,6 @@ mink:
         default:
           goutte: ~
     Cjm\Behat\LocalWebserverExtension:
+      suites: [ mink ]
       host: ~
       port: ~

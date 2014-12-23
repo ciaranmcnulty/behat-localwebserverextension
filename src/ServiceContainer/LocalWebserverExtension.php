@@ -81,6 +81,9 @@ final class LocalWebserverExtension implements Extension
                 ->scalarNode('docroot')
                     ->defaultNull()
                 ->end()
+                ->arrayNode('suites')
+                    ->prototype('scalar')->end()
+                ->end()
             ->end()
         ->end();
     }
@@ -96,6 +99,7 @@ final class LocalWebserverExtension implements Extension
         $container->setParameter('cjm.local_webserver.configuration.host', $config['host']);
         $container->setParameter('cjm.local_webserver.configuration.port', $config['port']);
         $container->setParameter('cjm.local_webserver.configuration.docroot', $config['docroot']);
+        $container->setParameter('cjm.local_webserver.configuration.suites', $config['suites']);
 
         $this->loadEventSubscribers($container);
         $this->loadWebserverController($container);
@@ -105,10 +109,16 @@ final class LocalWebserverExtension implements Extension
     private function loadEventSubscribers(ContainerBuilder $container)
     {
         $definition = new Definition('Cjm\Behat\LocalWebserverExtension\EventDispatcher\WebserverSubscriber', array(
-            new Reference('cjm.local_webserver.webserver_controller.built_in')
+            new Reference('cjm.local_webserver.webserver_controller.built_in'),
+            new Reference('cjm.local_webserver.suite.suite_identifier')
         ));
         $definition->addTag(EventDispatcherExtension::SUBSCRIBER_TAG);
         $container->setDefinition('cjm.local_webserver.suite_listener', $definition);
+
+        $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Suite\SuiteIdentifier', array(
+            '%cjm.local_webserver.configuration.suites%'
+        ));
+        $container->setDefinition('cjm.local_webserver.suite.suite_identifier', $definition);
     }
 
     private function loadWebserverController(ContainerBuilder $container)
