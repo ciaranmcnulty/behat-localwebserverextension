@@ -25,10 +25,6 @@ final class BuiltInWebserverController implements WebserverController
 
     public function startServer()
     {
-        if ($this->portIsAcceptingConnections()) {
-            throw new RuntimeException('Another webserver is already running on port '.$this->config->getPort());
-        }
-
         $this->startServerProcess();
         $this->waitForServerToSTart();
     }
