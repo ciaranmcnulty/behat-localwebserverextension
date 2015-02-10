@@ -42,6 +42,9 @@ default:
         suites: [ web, ui ]  # defaults to (all suites)
 ```
 
+If your behat config is elsewhere than in your root directory (for example `app/behat.yml` you need to customize the docroot to the right path. In our example it would be ` docroot: '%paths.base%/../web'`
+
+
 Usage with MinkExtension
 ------------------------
 
