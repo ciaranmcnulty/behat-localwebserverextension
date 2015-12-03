@@ -51,4 +51,14 @@ class DefaultConfigurationSpec extends ObjectBehavior
         $this->getDocroot()->shouldReturn('/home/user/www');
     }
 
+    function it_defaults_the_router()
+    {
+        $this->getRouter()->shouldReturn(Configuration::DEFAULT_ROUTER);
+    }
+
+    function it_uses_inner_router_where_there_is_one(Configuration $configuration)
+    {
+        $configuration->getRouter()->willReturn('router.php');
+        $this->getRouter()->shouldReturn('router.php');
+    }
 }

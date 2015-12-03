@@ -7,8 +7,10 @@ interface Configuration
     const DEFAULT_PORT = 8000;
     const DEFAULT_HOST = 'localhost';
     const DEFAULT_DOCROOT = '/web';
+    const DEFAULT_ROUTER = 'index.php';
 
     public function getPort();
     public function getHost();
     public function getDocroot();
+    public function getRouter();
 }

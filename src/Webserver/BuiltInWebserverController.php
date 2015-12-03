@@ -46,10 +46,11 @@ final class BuiltInWebserverController implements WebserverController
     {
         $phpFinder = new PhpExecutableFinder();
         return sprintf(
-             'exec %s -S %s -t %s',
+             'exec %s -S %s -t %s %s',
              escapeshellcmd($phpFinder->find()),
              escapeshellarg($this->config->getHost() . ':' . $this->config->getPort()),
-             escapeshellarg($this->config->getDocroot())
+             escapeshellarg($this->config->getDocroot()),
+             escapeshellarg($this->config->getDocroot() . '/' . $this->config->getRouter())
         );
     }
 

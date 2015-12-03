@@ -28,6 +28,7 @@ final class LocalWebserverExtension implements Extension
                 '%cjm.local_webserver.configuration.host%',
                 '%cjm.local_webserver.configuration.port%',
                 '%cjm.local_webserver.configuration.docroot%',
+                '%cjm.local_webserver.configuration.router%',
                 '%mink.base_url%'
             ));
             $container->setDefinition('cjm.local_webserver.configuration.mink', $definition);
@@ -81,6 +82,9 @@ final class LocalWebserverExtension implements Extension
                 ->scalarNode('docroot')
                     ->defaultNull()
                 ->end()
+                ->scalarNode('router')
+                    ->defaultNull()
+                ->end()
                 ->arrayNode('suites')
                     ->prototype('scalar')->end()
                 ->end()
@@ -99,6 +103,7 @@ final class LocalWebserverExtension implements Extension
         $container->setParameter('cjm.local_webserver.configuration.host', $config['host']);
         $container->setParameter('cjm.local_webserver.configuration.port', $config['port']);
         $container->setParameter('cjm.local_webserver.configuration.docroot', $config['docroot']);
+        $container->setParameter('cjm.local_webserver.configuration.router', $config['router']);
         $container->setParameter('cjm.local_webserver.configuration.suites', $config['suites']);
 
         $this->loadEventSubscribers($container);
@@ -134,7 +139,8 @@ final class LocalWebserverExtension implements Extension
         $definition = new Definition('Cjm\Behat\LocalWebserverExtension\Webserver\BasicConfiguration', array(
             '%cjm.local_webserver.configuration.host%',
             '%cjm.local_webserver.configuration.port%',
-            '%cjm.local_webserver.configuration.docroot%'
+            '%cjm.local_webserver.configuration.docroot%',
+            '%cjm.local_webserver.configuration.router%'
         ));
         $container->setDefinition('cjm.local_webserver.configuration.basic', $definition);
 
