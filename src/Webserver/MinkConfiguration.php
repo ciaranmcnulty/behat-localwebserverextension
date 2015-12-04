@@ -25,13 +25,13 @@ final class MinkConfiguration implements Configuration
      */
     private $router;
 
-    public function __construct($host, $port, $docroot, $router, $baseUrl)
+    public function __construct($host, $port, $docroot, $baseUrl, $router = Configuration::DEFAULT_ROUTER)
     {
         $this->host = $host;
         $this->port = $port;
         $this->docroot = $docroot;
-        $this->router = $router;
         $this->baseUrl = $baseUrl;
+        $this->router = $router;
     }
 
     public function getPort()
