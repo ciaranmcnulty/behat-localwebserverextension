@@ -54,3 +54,4 @@ final class MinkConfiguration implements Configuration
         return $this->router;
     }
 }
+

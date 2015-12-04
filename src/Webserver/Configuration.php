@@ -14,3 +14,4 @@ interface Configuration
     public function getDocroot();
     public function getRouter();
 }
+

@@ -28,3 +28,4 @@ class FeatureContext implements Context, SnippetAcceptingContext
         }
     }
 }
+

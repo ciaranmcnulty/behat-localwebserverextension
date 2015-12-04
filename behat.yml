@@ -11,7 +11,7 @@ mink:
       contexts: [ MinkContext ]
   extensions:
     Behat\MinkExtension:
-      base_url:  'http://localhost:8081'
+      base_url: 'http://localhost:8081'
       sessions:
         default:
           goutte: ~
@@ -20,3 +20,4 @@ mink:
       host: ~
       port: ~
       router: ~
+

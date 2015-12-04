@@ -62,3 +62,4 @@ class DefaultConfigurationSpec extends ObjectBehavior
         $this->getRouter()->shouldReturn('router.php');
     }
 }
+

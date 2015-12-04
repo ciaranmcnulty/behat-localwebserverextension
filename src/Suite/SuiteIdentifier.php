@@ -26,3 +26,4 @@ class SuiteIdentifier
         return in_array($suite->getName(), $this->suiteNames);
     }
 }
+

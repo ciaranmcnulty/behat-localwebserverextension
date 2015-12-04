@@ -40,3 +40,4 @@ final class DefaultConfiguration implements Configuration
         return $this->configuration->getRouter() ?: Configuration::DEFAULT_ROUTER;
     }
 }
+

@@ -57,3 +57,4 @@ class MinkConfigurationSpec extends ObjectBehavior
         $this->getRouter()->shouldReturn('router.php');
     }
 }
+
