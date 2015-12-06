@@ -9,7 +9,7 @@ final class BasicConfiguration implements Configuration
     private $docroot;
     private $router;
 
-    public function __construct($host, $port, $docroot, $router)
+    public function __construct($host, $port, $docroot, $router = Configuration::DEFAULT_ROUTER)
     {
         $this->host = $host;
         $this->port = $port;
