@@ -7,12 +7,14 @@ final class BasicConfiguration implements Configuration
     private $host;
     private $port;
     private $docroot;
+    private $router;
 
-    public function __construct($host, $port, $docroot)
+    public function __construct($host, $port, $docroot, $router = Configuration::DEFAULT_ROUTER)
     {
         $this->host = $host;
         $this->port = $port;
         $this->docroot = $docroot;
+        $this->router = $router;
     }
 
     public function getPort()
@@ -28,5 +30,10 @@ final class BasicConfiguration implements Configuration
     public function getDocroot()
     {
         return $this->docroot;
+    }
+
+    public function getRouter()
+    {
+        return $this->router;
     }
 }

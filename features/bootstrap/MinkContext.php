@@ -28,3 +28,4 @@ class MinkContext extends RawMinkContext implements Context, SnippetAcceptingCon
         $this->assertSession()->pageTextContains('It works!');
     }
 }
+

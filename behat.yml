@@ -4,14 +4,14 @@ default:
       host: localhost
       port: 8080
       docroot: %paths.base%/features/bootstrap/web
-
+      router: ~
 mink:
   suites:
     mink:
       contexts: [ MinkContext ]
   extensions:
     Behat\MinkExtension:
-      base_url:  'http://localhost:8081'
+      base_url: 'http://localhost:8081'
       sessions:
         default:
           goutte: ~
@@ -19,3 +19,5 @@ mink:
       suites: [ mink ]
       host: ~
       port: ~
+      router: ~
+

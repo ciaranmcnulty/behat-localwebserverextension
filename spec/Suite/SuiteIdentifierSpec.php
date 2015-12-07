@@ -40,3 +40,4 @@ class SuiteIdentifierSpec extends ObjectBehavior
         $this->suiteNeedsWebserver($suite)->shouldReturn(true);
     }
 }
+

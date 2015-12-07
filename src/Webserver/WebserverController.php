@@ -12,4 +12,5 @@ interface WebserverController
      * @return boolean
      */
     public function isStarted();
-} 
+}
+

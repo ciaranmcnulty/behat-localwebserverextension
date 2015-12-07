@@ -34,4 +34,10 @@ final class DefaultConfiguration implements Configuration
     {
         return $this->configuration->getDocroot() ?: $this->basePath . Configuration::DEFAULT_DOCROOT;
     }
+
+    public function getRouter()
+    {
+        return $this->configuration->getRouter() ?: Configuration::DEFAULT_ROUTER;
+    }
 }
+

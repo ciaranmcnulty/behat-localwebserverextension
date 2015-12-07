@@ -45,12 +45,16 @@ final class BuiltInWebserverController implements WebserverController
     private function getCommand()
     {
         $phpFinder = new PhpExecutableFinder();
-        return sprintf(
-             'exec %s -S %s -t %s',
-             escapeshellcmd($phpFinder->find()),
-             escapeshellarg($this->config->getHost() . ':' . $this->config->getPort()),
-             escapeshellarg($this->config->getDocroot())
+
+        $command = sprintf(
+             'exec %s -S %s -t %s %s',
+             $phpFinder->find(),
+             $this->config->getHost() . ':' . $this->config->getPort(),
+             $this->config->getDocroot(),
+             $this->config->getRouter()
         );
+
+        return escapeshellcmd(trim($command));
     }
 
     /**
@@ -81,3 +85,4 @@ final class BuiltInWebserverController implements WebserverController
         $this->process->start();
     }
 }
+
