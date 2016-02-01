@@ -14,7 +14,7 @@
         }
     ],
     "require" : {
-        "php" : "~5.4",
+        "php" : "~5.4,~7.0",
         "behat/behat" : "~3.0",
         "symfony/process" : "~2.3"
     },
